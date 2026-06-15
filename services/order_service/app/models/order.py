@@ -6,7 +6,7 @@ from datetime import datetime
 
 class Order(BaseModel):
     __tablename__ = "orders"
-    id: Mapped[str] = mapped_column(String(41),primary_key=True,index=True,default= lambda: str(gen_id))
+    id: Mapped[str] = mapped_column(String(41),primary_key=True,index=True,default= lambda: str(gen_id("orders-")))
     user_id: Mapped[str] = mapped_column(String(41),nullable=False)
     quantity_litres: Mapped[float] = mapped_column()
     delivary_date: Mapped[datetime] = mapped_column()

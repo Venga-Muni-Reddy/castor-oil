@@ -10,7 +10,5 @@ def get_db():
     db = session()
     try:
         yield db
-    except Exception as e:
-        raise Exception(f"DB Connection issue: {e}")
     finally:
         db.close()

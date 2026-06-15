@@ -1,6 +1,7 @@
 from app.models.order import Order
 from sqlalchemy.orm import Session
-
+from app.core.dependencies import ( owner_required )
+from fastapi import Depends
 
 class OrderRepository:
 
@@ -27,5 +28,20 @@ class OrderRepository:
         db: Session
     ):
         return db.query(Order).all()
+    
+    @staticmethod
+    def get_order_by_id(order_id:str,db:Session):
+        return db.query(Order).filter(Order.id==order_id).first()
+    
+    @staticmethod
+    def update_order(order:Order,db:Session):
+        db.commit()
+        db.refresh(order)
+        return order
+    
+    @staticmethod
+    def delete_order(order_id:str,db:Session):
+        
+        
 
     

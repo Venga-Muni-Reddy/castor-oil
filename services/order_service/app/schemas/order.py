@@ -14,3 +14,6 @@ class OrderResponse(BaseModel):
 
     class Config:
         from_attributes=True
+
+class UpdateOrderStatus(BaseModel):
+    status:str
