@@ -17,3 +17,4 @@ passlib[bcrypt]
 python-multipart
 pydantic
 pydantic[email]
+stripe

@@ -12,12 +12,18 @@ class OrderService:
         db: Session,
         user_id: str,
         quantity_litres: float,
-        delivary_date: date
+        delivary_date: date,
+        price_per_litre: float,
+        total_amount: float
+
     ):
         order =  Order(
             user_id=user_id,
             quantity_litres=quantity_litres,
-            delivary_date=delivary_date
+            delivary_date=delivary_date,
+            price_per_litre=price_per_litre,
+            total_amount=total_amount
+
         )
 
         return OrderRepository.create_order(
@@ -34,9 +40,10 @@ class OrderService:
         return OrderRepository.get_all_orders(db)
     
     @staticmethod
-    def update_order(order_id:str,status:str,db:Session):
+    def update_order(order_id:str,status:str,amount:float,db:Session):
         order = OrderRepository.get_order_by_id(order_id,db)
         order.order_status=status
+        order.total_amount=amount
         updated_order = OrderRepository.update_order(order,db)
         return updated_order
     

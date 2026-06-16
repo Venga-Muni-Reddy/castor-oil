@@ -39,8 +39,8 @@ class OrderRepository:
         db.refresh(order)
         return order
     
-    @staticmethod
-    def delete_order(order_id:str,db:Session):
+    # @staticmethod
+    # def delete_order(order_id:str,db:Session):
         
         
 

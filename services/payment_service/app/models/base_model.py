@@ -5,6 +5,7 @@ from datetime import datetime, timezone
 
 
 class BaseModel(Base):
+    __abstract__=True
     status: Mapped[int] = mapped_column(Integer,default=1,nullable=False)
     created_on: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),

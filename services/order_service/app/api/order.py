@@ -3,10 +3,11 @@ from app.schemas.order import OrderRequest, UpdateOrderStatus
 from app.core.dependencies import get_current_user
 from app.services.order import OrderService, OrderAuthorizationService
 from sqlalchemy.orm import Session
-from fastapi import Depends
+from fastapi import Depends, Body
 from app.db.database import get_db
 from app.core.dependencies import owner_required
 from fastapi import HTTPException
+from app.utils.model_helpers import OrderStatus
 
 router = APIRouter(
     prefix="/api/v1/order",
@@ -19,7 +20,9 @@ def create_order(order: OrderRequest,current_user=Depends(get_current_user),db: 
         db,
         user_id = current_user["user_id"],
         quantity_litres = order.quantity_litres,
-        delivary_date = order.delivary_date
+        delivary_date = order.delivary_date,
+        price_per_litre = 0,
+        total_amount=0
     )
 
     return  {
@@ -80,4 +83,11 @@ def delete_order(order_id:str,db:Session=Depends(get_db),current_user = Depends(
     }
 
     
+@router.patch("/internal/orders/{order_id}/paid")
+def update_status_internal(order_id:str,status: str = Body(...),amount: float = Body(...),db:Session=Depends(get_db)):
+        order = OrderService.update_order(order_id,OrderStatus.PAID,amount,db)
+        return {
+            "message":"Order Updated successfully",
+            "updated_order":order
+        }
      

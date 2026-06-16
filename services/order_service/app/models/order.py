@@ -1,7 +1,7 @@
 from app.models.base_model import BaseModel
 from sqlalchemy.orm import Mapped, mapped_column
 from app.utils.model_helpers import gen_id, OrderStatus
-from sqlalchemy import String, Enum
+from sqlalchemy import String, Enum, Float
 from datetime import datetime
 
 class Order(BaseModel):
@@ -11,3 +11,11 @@ class Order(BaseModel):
     quantity_litres: Mapped[float] = mapped_column()
     delivary_date: Mapped[datetime] = mapped_column()
     order_status: Mapped[str] = mapped_column(Enum(OrderStatus,name="order_status"), nullable=False, default=OrderStatus.PENDING)
+    price_per_litre: Mapped[float] = mapped_column(
+        Float,
+        nullable=False
+    )
+    total_amount: Mapped[float] = mapped_column(
+        Float,
+        nullable=False
+    )
